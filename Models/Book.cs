@@ -16,4 +16,5 @@ public class Book
 
     public string Category { get; set; } = null!;
 
+    public string Author { get; set; } = null!;
 }
