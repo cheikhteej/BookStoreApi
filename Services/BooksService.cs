@@ -14,6 +14,11 @@ public class BooksService
         var mongoClient = new MongoClient(
             bookStoreDatabaseSettings.Value.ConnectionString);
 
+        var mongoDatabase = mongoClient.GetDatabase(
+            bookStoreDatabaseSettings.Value.DatabaseName);
+
+        _booksCollection = mongoDatabase.GetCollection<Book>(
+            bookStoreDatabaseSettings.Value.BooksCollectionName);
     }
 
     public async Task<List<Book>> GetAsync() =>
@@ -27,6 +32,7 @@ public class BooksService
 
     public async Task UpdateAsync(string id, Book updatedBook) =>
         await _booksCollection.ReplaceOneAsync(x => x.Id == id, updatedBook);
+
 
     public async Task RemoveAsync(string id) =>
         await _booksCollection.DeleteOneAsync(x => x.Id == id);
