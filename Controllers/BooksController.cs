@@ -35,14 +35,6 @@ public class BooksController : ControllerBase
         return book;
     }
 
-    [HttpPost]
-    [Authorize(Roles = "Admin")] // Seul Admin peut ajouter
-    public async Task<IActionResult> Post(Book newBook)
-    {
-        await _booksService.CreateAsync(newBook);
-
-        return CreatedAtAction(nameof(Get), new { id = newBook.Id }, newBook);
-    }
 
     [HttpPut("{id:length(24)}")]
     [Authorize(Roles = "Admin")] // Seul Admin peut modifier
